@@ -24,3 +24,26 @@ class Solution:
 
 
 
+# more understandable backtracking olution
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        pick = [False] * len(nums)
+        def dfs(cur, pick):
+            # base case
+            # if lengths are equal, weve made it to end and have a permutation, add it
+            if len(cur) == len(nums):
+                res.append(cur.copy())
+            for i in range(len(nums)):
+                # if a number hasnt been picked, add it, and configure all perms with it picked
+                # after, pop that number, move to next one ( in for loop ) and pick that one
+                # always pop and reset a number after picking it
+                if not pick[i]:
+                    pick[i] = True
+                    cur.append(nums[i])
+                    dfs(cur, pick)
+                    cur.pop()
+                    pick[i] = False
+
+        dfs([], pick)
+        return res
